@@ -1,10 +1,10 @@
-name: Deploy CI
-
-on:
+name: Custom K8s Init Workflow
+#Crear trigger de PR se lanza
+on: 
   pull_request:
     types: [ labeled, synchronize, closed  ]
-      branches: 
-        - main
+    branches: 
+      - main
       paths:
         - 'apps/pro/**/values.yaml'
 
