@@ -11,7 +11,6 @@ jobs:
   deploy:
     name: Detect changes
     runs-on: ubuntu-latest
-    id: detect-changes
     steps:
     - name: Dump GitHub context
       env:
@@ -20,7 +19,7 @@ jobs:
 
     - name: checkout
       uses: actions/checkout@v4
-      
+
     - name: otro step
       run: |
         # changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
