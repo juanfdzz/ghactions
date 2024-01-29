@@ -1,0 +1,28 @@
+name: Deploy CI
+
+on:
+  pull_request:
+    types: [ labeled, synchronize, closed  ]
+      branches: 
+        - main
+      paths:
+        - 'apps/pro/**/values.yaml'
+
+  workflow_dispatch:
+
+
+jobs:
+
+  deploy:
+        name: Detect changes
+        id: detect-changes
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
+          echo "Changed files: $changed_files"
+          if [[ -n "$changed_files" ]]; then
+            echo "::set-output name=values-changed::true"
+          else
+            echo "::set-output name=values-changed::false"
+          fi
+          
+        name: Deploy
