@@ -1,36 +1,15 @@
-name: ci/cd testing workflow
-#Crear trigger de PR se lanza
-on: 
-  pull_request:
-    types: [ labeled, synchronize, closed  ]
-      paths:
-        - 'apps/pro/**/values.yaml'
+name: Deploy CI
+
+on:
+  workflow_dispatch:
+
 
 jobs:
 
   deploy:
-    name: Detect changes
-    runs-on: ubuntu-latest
-    id: detect-changes
-    steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJSON(github) }}
-      run: echo "$GITHUB_CONTEXT"
-
-    - name: checkout
-      uses: actions/checkout@v4
-      run: |
-        # changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
-        # echo "Changed files: $changed_files"
-        # if [[ -n "$changed_files" ]]; then
-        #   echo "::set-output name=values-changed::true"
-        # else
-        #   echo "::set-output name=values-changed::false"
-        # fi
-        commit_sha=${{ github.event.pull_request.head.sha }}
-        echo ${{ github.event.workflow_run.head_sha }}
-        echo $commit_sha^
-        echo $commit_sha
-    - name: Deploy
-      run: echo nose
+        name: Deploy
+        uses: stemdo/workflows/.github/workflows/helm-v1.yml@main
+        with:
+          helm_version: 'v3.10.1'
+        #   helm_namespace: 'cert-manager'   Usar siempre namespaceOverride y agregar el namespace
+          helm_chart: 'charts/godaddy-webhook'
