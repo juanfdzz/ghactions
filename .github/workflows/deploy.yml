@@ -1,4 +1,4 @@
-name: Custom K8s Init Workflow
+name: ci/cd testing workflow
 #Crear trigger de PR se lanza
 on: 
   pull_request:
@@ -24,7 +24,7 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
         name: checkout
-        - uses: actions/checkout@v4
+        uses: actions/checkout@v4
         run: |
           # changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
           # echo "Changed files: $changed_files"
