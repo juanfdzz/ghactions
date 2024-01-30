@@ -20,7 +20,7 @@ jobs:
 
           echo $changed_files
           # Verifica si un archivo específico ha cambiado
-          if echo "$changed_files" | grep -q "^values.yaml$"; then
+          if echo "$changed_files" | grep -q "values.yaml"; then
             echo "El archivo 'apps/pro/k8s/values.yaml' ha cambiado"
           else
             echo "El archivo 'apps/pro/k8s/values.yaml' no ha cambiado"
