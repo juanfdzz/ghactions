@@ -1,37 +1,42 @@
-name: ci/cd testing workflow
-#Crear trigger de PR se lanza
-on: 
-  pull_request:
+name: Deploy CI
 
-      paths:
-        - 'apps/pro/**/values.yaml'
+on:
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - 'apps/pro/**/values.yaml'
+
+  workflow_dispatch:
 
 jobs:
-
   deploy:
-    name: Detect changes
     runs-on: ubuntu-latest
     steps:
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJSON(github) }}
-      run: echo "$GITHUB_CONTEXT"
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Detect changes
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
+          echo "Changed files: $changed_files"
+          if [[ -n "$changed_files" ]]; then
+            echo "::set-output name=values-changed::true"
+          else
+            echo "::set-output name=values-changed::false"
+          fi
 
-    - name: checkout
-      uses: actions/checkout@v4
+      - name: testing
+        run: |
+           echo "Before: ${{ github.event.before }}"
+           echo "SHA: ${{ github.sha }}"
+           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+           echo "Changed files: $changed_files"
+           if [[ -n "$changed_files" ]]; then
+             echo "::set-output name=values-changed::true"
+           else
+             echo "::set-output name=values-changed::false"
+           fi
 
-    - name: otro step
-      run: |
-        # changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
-        # echo "Changed files: $changed_files"
-        # if [[ -n "$changed_files" ]]; then
-        #   echo "::set-output name=values-changed::true"
-        # else
-        #   echo "::set-output name=values-changed::false"
-        # fi
-        commit_sha=${{ github.event.pull_request.head.sha }}
-        echo ${{ github.event.workflow_run.head_sha }}
-        echo $commit_sha^
-        echo $commit_sha
-    - name: Deploy
-      run: echo nose
+           
