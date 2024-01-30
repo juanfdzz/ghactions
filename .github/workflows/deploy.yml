@@ -26,3 +26,13 @@ jobs:
           fi
           
         name: Deploy
+        run: |
+           echo "Before: ${{ github.event.before }}"
+           echo "SHA: ${{ github.sha }}"
+           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+           echo "Changed files: $changed_files"
+           if [[ -n "$changed_files" ]]; then
+           echo "::set-output name=values-changed::true"
+           else
+           echo "::set-output name=values-changed::false"
+           fi
