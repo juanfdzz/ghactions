@@ -2,8 +2,6 @@ name: Deploy CI
 
 on:
   push:
-    paths:
-      - 'apps/pro/**/values.yaml'
 
   workflow_dispatch:
 
