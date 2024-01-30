@@ -18,7 +18,7 @@ jobs:
         run: |
           # Obtén la lista de archivos cambiados
           changed_files=$(git diff --name-only HEAD~1..HEAD)
-          changedValues=$(echo $changed_files | grep -q "apps/pro/**/values.yaml"
+          changedValues=$(echo $changed_files | grep -q "values.yaml"
           echo $changedValues
 
           if echo "$changedValues"; then
