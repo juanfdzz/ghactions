@@ -19,13 +19,9 @@ jobs:
           fetch-depth: 0
       - name: Detect changes
         run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
-          echo "Changed files: $changed_files"
-          if [[ -n "$changed_files" ]]; then
-            echo "::set-output name=values-changed::true"
-          else
-            echo "::set-output name=values-changed::false"
-          fi
+          git diff HEAD~1..HEAD apps/pro/k8s/values.yaml
+
+          echo HEAD^ $HEAD 
 
       - name: testing
         run: |
