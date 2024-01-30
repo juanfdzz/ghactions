@@ -23,11 +23,12 @@ jobs:
           changed_files=$(git diff --name-only HEAD~1..HEAD)
           
           # Verifica si un archivo específico ha cambiado
-          if echo "$changed_files" | grep -q "^ruta/al/archivo$"; then
-            echo "El archivo 'ruta/al/archivo' ha cambiado"
+          if echo "$changed_files" | grep -q "^apps/pro/k8s/values.yaml$"; then
+            echo "El archivo 'apps/pro/k8s/values.yaml' ha cambiado"
           else
-            echo "El archivo 'ruta/al/archivo' no ha cambiado"
+            echo "El archivo 'apps/pro/k8s/values.yaml' no ha cambiado"
           fi
+
 
 
       - name: testing
