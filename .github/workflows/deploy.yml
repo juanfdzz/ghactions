@@ -2,19 +2,22 @@ name: Deploy CI
 
 on:
   pull_request:
-      branches: 
-        - main
-      paths:
-        - 'apps/pro/**/values.yaml'
+    branches: 
+      - main
+    paths:
+      - 'apps/pro/**/values.yaml'
 
   workflow_dispatch:
 
-
 jobs:
-
   deploy:
-        name: Detect changes
-        id: detect-changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Detect changes
         run: |
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^apps/pro/.*values.yaml$' || true)
           echo "Changed files: $changed_files"
@@ -23,15 +26,15 @@ jobs:
           else
             echo "::set-output name=values-changed::false"
           fi
-          
-        name: Deploy
+
+      - name: testing
         run: |
            echo "Before: ${{ github.event.before }}"
            echo "SHA: ${{ github.sha }}"
            changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
            echo "Changed files: $changed_files"
            if [[ -n "$changed_files" ]]; then
-           echo "::set-output name=values-changed::true"
+             echo "::set-output name=values-changed::true"
            else
-           echo "::set-output name=values-changed::false"
+             echo "::set-output name=values-changed::false"
            fi
