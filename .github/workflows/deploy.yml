@@ -18,11 +18,10 @@ jobs:
         run: |
           # Obtén la lista de archivos cambiados
           changed_files=$(git diff --name-only HEAD~1..HEAD)
-          changedValues=$(echo $changed_files | grep "values.yaml"
-          echo $changedValues
+          echo $changed_files
 
-          if echo "$changedValues"; then
-            echo "El archivo que ha cambiado es $changedValues: 
+          if echo "$changed_files"; then
+            echo "El archivo que ha cambiado es $changed_files: 
           else
             echo "Ningún archivo de values.yaml ha cambiado"
           fi
