@@ -1,10 +1,7 @@
 name: Deploy CI
-
 on:
   push:
-
   workflow_dispatch:
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,16 +15,13 @@ jobs:
         run: |
           # Obtén la lista de archivos cambiados
           changed_files=$(git diff --name-only HEAD~1..HEAD)
-          echo $changed_files
-
-          if echo "$changed_files"; then
-            echo "El archivo que ha cambiado es $changed_files: 
+          changedValues=$(echo $changed_files | grep "values.yaml"
+          echo $changedValues
+          if echo "$changedValues"; then
+          echo "El archivo que ha cambiado es $changedValues" 
           else
             echo "Ningún archivo de values.yaml ha cambiado"
           fi
-
-
-
       - name: testing
         run: |
            echo "Before: ${{ github.event.before }}"
@@ -39,5 +33,3 @@ jobs:
            else
              echo "::set-output name=values-changed::false"
            fi
-
-           
