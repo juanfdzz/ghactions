@@ -2,7 +2,6 @@ name: Deploy CI
 
 on:
   pull_request:
-    types: [ labeled, synchronize, closed  ]
       branches: 
         - main
       paths:
