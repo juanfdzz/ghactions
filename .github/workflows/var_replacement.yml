@@ -9,10 +9,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+      
+      - name: Get secret names
+        run: |
+
+          secret_names=""
+          line=$(grep "secrets_replacement:" ".github/workflows/${{ github.workflow }}")
+          if [[ $line == *"secrets."* ]]; then
+            line_secrets=$(echo $line | grep -oP '(?<=secrets\.)\w+')
+            for secret in $line_secrets; do
+              secret_names+="$secret "
+            done
+          fi
+          echo "SECRET_NAMES=${secret_names% }" >> $GITHUB_ENV
 
       - name: Run Secret Replacement Script
         run: ./var_replacement.sh
         shell: bash
         env:
           filename: "test.yaml configmap.yaml testing.yaml"
-          secrets: "${{ secrets.GRAFANA_INI_DBHOST }} ${{ secrets.GRAFANA_INI_DBPASSWORD }} ${{ secrets.GRAFANA_INI_DBUSER }} ${{ secrets.GRAFANA_INI_SMTPFROMADDRESS }} ${{ secrets.GRAFANA_INI_SMTPHOST }} ${{ secrets.TEST }} ${{ secrets.ASD }}"
+          secrets_replacement: "${{ secrets.GRAFANA_INI_DBHOST }} ${{ secrets.GRAFANA_INI_DBPASSWORD }} ${{ secrets.GRAFANA_INI_DBUSER }} ${{ secrets.GRAFANA_INI_SMTPFROMADDRESS }} ${{ secrets.GRAFANA_INI_SMTPHOST }} ${{ secrets.TEST }} ${{ secrets.ASD }}"
+          secrets_names: "${{ env.SECRET_NAMES }}"
+
