@@ -1,0 +1,38 @@
+apiVersion: v1
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [database]
+    host = ${{ grafana_ini_dbhost }}
+    name = grafana
+    password = ${{ grafana_ini_dbpassword }}
+    type = postgres
+    user = ${{ grafana_ini_dbuser }}
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [server]
+    domain = ''
+    root_url = 'https://monitor.stemdo.io/'
+    [smtp]
+    enabled = true
+    from_address = ${{ grafana_ini_smtpfromaddress }}
+    host = ${{ grafana_ini_smtphost }}
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: stack-prometheus
+    meta.helm.sh/release-namespace: monitoring
+  labels:
+    app.kubernetes.io/instance: stack-prometheus
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: grafana
+  name: stack-prometheus-grafana
+  namespace: monitoring
