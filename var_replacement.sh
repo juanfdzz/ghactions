@@ -4,7 +4,9 @@ set -x
 filenames=("${filename}")
 secrets=("${secrets}")
 secrets_name=("${secrets_names}")
-
+echo $secrets_name
+echo $secrets
+echo $filenames
 # Recorre cada archivo
 for file in "${filenames[@]}"; do
   # Busca el archivo en todos los directorios
