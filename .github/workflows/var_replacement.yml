@@ -19,7 +19,7 @@ jobs:
         run: |
 
           secret_names=""
-          line=$(grep "secrets_replacement:" ".github/workflows/${{  github.ref  }}")
+          line=$(grep "secrets_replacement:" "${{  github.workflow  }}")
           if [[ $line == *"secrets."* ]]; then
             line_secrets=$(echo $line | grep -oP '(?<=secrets\.)\w+')
             for secret in $line_secrets; do
