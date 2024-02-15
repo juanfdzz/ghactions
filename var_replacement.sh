@@ -14,7 +14,7 @@ for i in "${SECRETS_ARRAY[@]}"; do
   #export "${SECRET_NAMES_ARRAY[$i]}=$secret_value"
 
   # Preparamos la expresión regular para buscar la variable de entorno en el formato ${{ variable }}
-  regex="\${{ ${SECRET_NAMES[$i]} }}"
+  regex="\${{ ${SECRET_NAMES_ARRAY[$i]} }}"
   echo $regex
 
   # Usamos sed para reemplazar las variables en los archivos
