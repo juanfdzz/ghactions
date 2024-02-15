@@ -7,6 +7,11 @@ jobs:
     name: Reemplazar Secretos
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Checkout repository
         uses: actions/checkout@v2
       
@@ -14,7 +19,7 @@ jobs:
         run: |
 
           secret_names=""
-          line=$(grep "secrets_replacement:" ".github/workflows/${{ github.event_path		}}")
+          line=$(grep "secrets_replacement:" ".github/workflows/${{  github.ref  }}")
           if [[ $line == *"secrets."* ]]; then
             line_secrets=$(echo $line | grep -oP '(?<=secrets\.)\w+')
             for secret in $line_secrets; do
