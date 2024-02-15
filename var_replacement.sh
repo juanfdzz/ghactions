@@ -22,3 +22,5 @@ for ((i=0; i<$length; i++)); do
 done
 
 cat apps/pro/k8s/configmap.yaml
+cat apps/pro/k8s/asd.yaml
+cat apps/pro/k8s/asding.yaml
