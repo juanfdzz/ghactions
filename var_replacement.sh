@@ -19,9 +19,7 @@ for file in "${filenames[@]}"; do
   done
 done
 
-echo Esto muestra algo?
-echo "$filenames"
+echo echo dolar secrets debajo?
 echo "$secrets"
-echo ahora con el dolar
-echo "${filename}"
-echo "${secrets}"
+
+cat apps/pro/k8s/configmap.yaml
