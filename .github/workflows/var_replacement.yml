@@ -24,7 +24,7 @@ jobs:
           echo "SECRET_NAMES=${secret_names% }" >> $GITHUB_ENV
 
       - name: Run Secret Replacement Script
-        run: ./var_replacement.sh "${{ env.SECRET_NAMES }}" "${{ env.filename }}"
+        run: ./var_replacement.sh
         shell: bash
         env:
           filenames: "asd.yaml configmap.yaml asding.yaml"

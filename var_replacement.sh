@@ -11,7 +11,7 @@ for i in "${SECRETS_ARRAY[@]}"; do
   secret_value="${SECRETS_ARRAY[$i]}"
 
   # Creamos una variable de entorno con el nombre del secreto y su valor
-  export "${SECRET_NAMES_ARRAY[$i]}=$secret_value"
+  #export "${SECRET_NAMES_ARRAY[$i]}=$secret_value"
 
   # Preparamos la expresión regular para buscar la variable de entorno en el formato ${{ variable }}
   regex="\${{ ${SECRET_NAMES[$i]} }}"
