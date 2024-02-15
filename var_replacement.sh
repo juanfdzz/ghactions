@@ -13,7 +13,7 @@ for file in "${filenames[@]}"; do
     # Recorre cada secreto
     for secret in "${secrets[@]}"; do
       # Reemplaza todas las ocurrencias del nombre del secreto en el archivo
-      sed -i "s/$secret/$(eval echo \$$secret)/g" $filepath
+      sed -i "s/$secret/$(eval echo \$$secret)/Ig" $filepath
     done
     cat "$filepath"
   done

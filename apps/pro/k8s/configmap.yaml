@@ -4,7 +4,7 @@ data:
     [analytics]
     check_for_updates = true
     [database]
-    host = ${{ grafana_ini_dbhost }}
+    host = ${{ GRAFANA_INI_DBHOST }}
     name = grafana
     password = ${{ grafana_ini_dbpassword }}
     type = postgres
