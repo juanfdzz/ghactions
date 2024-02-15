@@ -1,5 +1,6 @@
 #!/bin/bash
-
+cat $0
+set -x
 # Obtén los nombres de los archivos y los secretos de las variables de entorno
 filenames=("${filename}")
 secrets=("${secrets}")
@@ -18,3 +19,9 @@ for file in "${filenames[@]}"; do
   done
 done
 
+echo Esto muestra algo?
+echo "$filenames"
+echo "$secrets"
+echo ahora con el dolar
+echo "${filename}"
+echo "${secrets}"
