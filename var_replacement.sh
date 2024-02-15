@@ -12,9 +12,10 @@ for file in "${filenames[@]}"; do
     echo "Procesando el archivo $filepath"
     # Recorre cada secreto
     for secret in "${secrets[@]}"; do
-      # Reemplaza todas las ocurrencias del nombre del secreto en el archivo
-      sed -i "s/$secret/$(eval echo \$$secret)/Ig" $filepath
+      # Reemplaza todas las ocurrencias del nombre del secreto en el archivo, sin tener en cuenta mayúsculas o minúsculas
+      sed -i "s/\$\{\{ $secret \}\}/$(eval echo \$$secret)/Ig" $filepath
     done
+    # Muestra el contenido del archivo
     cat "$filepath"
   done
 done
