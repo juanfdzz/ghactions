@@ -10,12 +10,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Setup environment
-        run: |
-          # Aquí puedes configurar cualquier otra cosa necesaria para tu script
-
       - name: Run Secret Replacement Script
-        run: var_replacement.sh
+        run: ./var_replacement.sh
+        shell: bash
         env:
           filename: "test.yaml configmap.yaml testing.yaml"
           secrets: "${{ secrets.GRAFANA_INI_DBHOST }} ${{ secrets.GRAFANA_INI_DBPASSWORD }} ${{ secrets.GRAFANA_INI_DBUSER }} ${{ secrets.GRAFANA_INI_SMTPFROMADDRESS }} ${{ secrets.GRAFANA_INI_SMTPHOST }} ${{ secrets.TEST }} ${{ secrets.ASD }}"
