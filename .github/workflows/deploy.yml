@@ -1,11 +1,11 @@
 name: Deploy CI
 
 on:
-  pull_request:
-    branches: 
-      - main
-    paths:
-      - 'apps/pro/**/values.yaml'
+  #pull_request:
+    #branches: 
+     # - main
+    #paths:
+      #- 'apps/pro/**/values.yaml'
 
   workflow_dispatch:
 
