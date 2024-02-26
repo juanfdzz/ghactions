@@ -1,7 +1,5 @@
 #!/bin/bash
-set -x
 
-# Obtén los nombres de los archivos y los secretos desde las variables de entorno
 files="${filenames}"
 echo "${secrets}" | jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
 
@@ -12,14 +10,14 @@ while IFS= read -r line; do
     value=$(echo "$line" | cut -d'=' -f2)
     echo $key
     echo $value
-    # Itera sobre cada archivo
-    for file in $files; do
-        # Reemplaza la clave del secreto con su valor en el archivo
+    if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
         sed -i "s/__${key}__/${value}/g" "$file"
-    done
+    else
+        echo "${{ $value }}" | awk '{print "                          " $0}' > key.pem
+        sed -i "/__${key}__/r key.pem" $file
+        sed -i "/__${key}__/d" $file
+
 done < "secrets.txt"
 
 
 cat apps/pro/k8s/asd.yaml
-
-cat apps/pro/k8s/asding.yaml

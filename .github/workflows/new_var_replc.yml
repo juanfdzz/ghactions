@@ -14,5 +14,5 @@ jobs:
         run: ./secrets_replc.sh
         shell: bash
         env:
-          filenames: "apps/pro/k8s/asd.yaml apps/pro/k8s/configmap.yaml apps/pro/k8s/asding.yaml"
+          filenames: "apps/pro/k8s/asd.yaml"
           secrets: ${{ toJSON(secrets) }}

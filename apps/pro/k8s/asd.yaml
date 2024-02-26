@@ -1,1 +1,8 @@
 nose = __ASD__
+
+  password = ${{ grafana_ini_dbpassword }}
+  type = postgres
+  user = ${{ grafana_ini_dbuser }}
+  
+  clave = |
+__ESTO_ES_UNA_PRIVATE_KEY_PRIVADA__
