@@ -12,6 +12,8 @@ eval "declare -A secret_array=$(echo "$secrets" | jq -r 'to_entries | .[] | .key
 for file in $files; do
     # Itera sobre cada secreto
     for secret_key in "${!secret_array[@]}"; do
+        echo $secret_key
+        echo $secret_array
         # Reemplaza la clave del secreto con su valor en el archivo
         sed -i "s/__${secret_key}__/${secret_array[$secret_key]}/g" "$file"
     done
