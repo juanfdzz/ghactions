@@ -16,7 +16,7 @@ while IFS= read -r line; do
         echo "${{ $value }}" | awk '{print "                          " $0}' > key.pem
         sed -i "/__${key}__/r key.pem" $file
         sed -i "/__${key}__/d" $file
-
+    fi
 done < "secrets.txt"
 
 
