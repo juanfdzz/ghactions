@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files="${filenames}"
+file="${filenames}"
 echo "${secrets}" | jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
 
 
