@@ -2,21 +2,26 @@
 
 # Obtén los nombres de los archivos y los secretos desde las variables de entorno
 files="${filenames}"
-secrets="${secrets}"
+secrets_json="${secrets}"
 
-# Convierte el JSON de los secretos en un array asociativo en Bash
-declare -A secret_array
-eval "declare -A secret_array=$(echo "$secrets" | jq -r 'to_entries | .[] | .key + "=" + (.value|tostring)' | sed 's/\"//g')"
+# Decodifica los secretos desde el formato JSON
+secrets=$(echo "$secrets_json" | jq -r 'to_entries | .[] | "--" + .key + "=" + .value')
 
-# Itera sobre cada archivo especificado
+# Reemplaza los valores en cada archivo
 for file in $files; do
-    # Itera sobre cada secreto
-    for secret_key in "${!secret_array[@]}"; do
-        echo $secret_key
-        # Reemplaza la clave del secreto con su valor en el archivo
-        sed -i "s/__${secret_key}__/${secret_array[$secret_key]}/g" "$file"
-    done
+    while IFS= read -r line; do
+        for secret in $secrets; do
+            name="${secret%%=*}"
+            value="${secret#*=}"
+            line="${line//__$name__/$value}"
+        done
+        echo "$line"
+        echo $name
+        echo $value
+    done < "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+    echo "Secretos reemplazados en $file"
 done
+
 
 cat apps/pro/k8s/asd.yaml
 cat apps/pro/k8s/asding.yaml
