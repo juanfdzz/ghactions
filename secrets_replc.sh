@@ -1,7 +1,7 @@
 #!/bin/bash
 
 file="${filenames}"
-echo "${secrets}" | jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
+echo "${secrets}" #| jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
 
 
 # Reemplaza los valores en cada archivo
