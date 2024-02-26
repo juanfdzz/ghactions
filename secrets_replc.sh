@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # Obtén los nombres de los archivos y los secretos desde las variables de entorno
 files="${filenames}"
@@ -20,4 +21,5 @@ done < "secrets.txt"
 
 
 cat apps/pro/k8s/asd.yaml
+
 cat apps/pro/k8s/asding.yaml
