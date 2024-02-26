@@ -2,24 +2,21 @@
 
 # Obtén los nombres de los archivos y los secretos desde las variables de entorno
 files="${filenames}"
-secrets_json="${secrets}"
+echo "${secrets}" | jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
 
-# Decodifica los secretos desde el formato JSON
-secrets=$(echo "$secrets_json" | jq -r 'to_entries | .[] | "--" + .key + "=" + .value')
 
 # Reemplaza los valores en cada archivo
-for file in $files; do
-    while IFS= read -r line; do
-        for secret in $secrets; do
-            name="${secret%%=*}"
-            value="${secret#*=}"
-            line="${line//__$name__/$value}"
-        done
-    done < "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-    echo "$line"
-    echo $name
+while IFS= read -r line; do
+    key=$(echo "$line" | cut -d'=' -f1)
+    value=$(echo "$line" | cut -d'=' -f2)
+    echo $key
     echo $value
-done
+    # Itera sobre cada archivo
+    for file in $files; do
+        # Reemplaza la clave del secreto con su valor en el archivo
+        sed -i "s/__${key}__/${value}/g" "$file"
+    done
+done < "secrets.txt"
 
 
 cat apps/pro/k8s/asd.yaml
