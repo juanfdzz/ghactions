@@ -15,11 +15,10 @@ for file in $files; do
             value="${secret#*=}"
             line="${line//__$name__/$value}"
         done
-        echo "$line"
-        echo $name
-        echo $value
     done < "$file" > "$file.tmp" && mv "$file.tmp" "$file"
-    echo "Secretos reemplazados en $file"
+    echo "$line"
+    echo $name
+    echo $value
 done
 
 
