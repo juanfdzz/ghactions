@@ -16,5 +16,5 @@ for file in $files; do
         sed -i "s/__${secret_key}__/${secret_array[$secret_key]}/g" "$file"
     done
 done
-cat asd.yaml
-cat asding.yaml
+cat /apps/pro/k8s/asd.yaml
+cat /apps/pro/k8s/asding.yaml
