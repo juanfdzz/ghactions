@@ -1,7 +1,7 @@
 #!/bin/bash
 file="${filenames}"
-keys=$(echo "${secrets}" | | jq -r 'keys[]')
-values=$(echo "${secrets}" | | jq -r '.[]')
+keys=$(echo "${secrets}" | jq -r 'keys[]')
+values=$(echo "${secrets}" | jq -r '.[]')
 
 cat $keys
 echo valores
