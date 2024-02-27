@@ -3,6 +3,10 @@ file="${filenames}"
 # keys=$(echo "${secrets}" | jq -r 'keys[]')
 # values=$(echo "${secrets}" | jq -r '.[]')
 
+echo "${secrets}"
+echo "Probando desde un cat a un fichero"
+echo "${secrets}" > secrets.txt
+cat secrets.txt
 # Extraer las claves y valores de la cadena JSON
 keys=$(echo "${secrets}" | jq -r 'keys[]')
 values=$(echo "${secrets}" | jq -r '.[]')
