@@ -4,7 +4,6 @@ file="${filenames}"
 echo "${secrets}" | jq -r 'to_entries | .[] | .key + "=" + .value' > secrets.txt
 cat secrets.txt
 
-Reemplaza los valores en cada archivo
 while IFS= read -r line; do
     key=$(echo "$line" | cut -d'=' -f1)
     value=$(echo "$line" | cut -d'=' -f2)
