@@ -5,7 +5,7 @@
 # values=$(echo "${secrets}" | jq -r '.[]')
 
 file="${filenames}"
-secret_file="echo ${secrets}"
+secs="${secrets}"
 # Leer el archivo de secretos línea por línea
 while IFS= read -r line; do
     # Extraer la clave y el valor de la línea
