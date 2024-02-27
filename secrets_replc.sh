@@ -1,11 +1,11 @@
 #!/bin/bash
-file="${filenames}"
-secret_file="${secrets}"
+
 # Extraer las claves y valores de la cadena JSON
 # keys=$(echo "${secrets}" | jq -r 'keys[]')
 # values=$(echo "${secrets}" | jq -r '.[]')
 
-
+file="${filenames}"
+secret_file="echo ${secrets}"
 # Leer el archivo de secretos línea por línea
 while IFS= read -r line; do
     # Extraer la clave y el valor de la línea
