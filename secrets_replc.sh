@@ -5,29 +5,21 @@
 # values=$(echo "${secrets}" | jq -r '.[]')
 
 file="${filenames}"
-echo "${secrets}" > secs.txt
-secretos=$(<"secs.txt")
 
-# Leer el archivo de secretos línea por línea
-while IFS= read -r line; do
-    # Extraer la clave y el valor de la línea
-    key=$(echo "$line" | jq -r 'keys[]')
-    value=$(echo "$line" | jq -r 'values[]')
+secretos="${secrets}"
 
-    # Reemplazar cada ocurrencia de la clave en el archivo con su valor correspondiente
-    if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
-        sed -i "s/__${key}__/${value}/g" "$file"
-    else
-        # Guardar el valor en un archivo temporal respetando los saltos de línea
-        echo "$value" > key_temp.pem
-        # Insertar el contenido del archivo temporal en el lugar correspondiente en el archivo
-        sed -i "/__${key}__/r key_temp.pem" "$file"
-        # Eliminar la línea con la clave del archivo
-        sed -i "/__${key}__/d" "$file"
-        # Eliminar el archivo temporal
-        rm key_temp.pem
-    fi
-done < "$secretos"
+# Extraer las claves y valores de la cadena JSON
+keys=$(echo "$secrets" | jq -r 'keys[]')
+values=$(echo "$secrets" | jq -r '.[]')
+
+# Iterar sobre las claves y valores
+for key in $keys; do
+    value=$(echo "$secretos" | jq -r ".$key")
+    # Sustituir el valor en el archivo
+    sed -i "s/__${key}__/${value}/g" "$file"
+done
+
+
 
 
 cat $file
