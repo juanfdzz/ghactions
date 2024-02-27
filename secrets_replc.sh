@@ -5,7 +5,7 @@
 # values=$(echo "${secrets}" | jq -r '.[]')
 
 file="${filenames}"
-secs="cat ${secrets}"
+echo "${secrets}" > secs.txt
 
 # Leer el archivo de secretos línea por línea
 while IFS= read -r line; do
@@ -26,7 +26,7 @@ while IFS= read -r line; do
         # Eliminar el archivo temporal
         rm key_temp.pem
     fi
-done < "$secs"
+done < "secs.txt"
 
 
 cat $file
