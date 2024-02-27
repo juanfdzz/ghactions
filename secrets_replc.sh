@@ -27,4 +27,4 @@ for key in $keys; do
 done
 
 
-
+cat $file
