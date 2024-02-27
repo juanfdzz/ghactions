@@ -3,9 +3,9 @@ file="${filenames}"
 keys=$(echo "${secrets}" | jq -r 'keys[]')
 values=$(echo "${secrets}" | jq -r '.[]')
 
-cat $keys
+echo $keys
 echo valores
-cat $values
+echo $values
 # while IFS= read -r line; do
 #     key=$(echo "$line" | cut -d'=' -f1)
 #     value=$(echo "$line" | cut -d'=' -f2)
