@@ -6,6 +6,7 @@
 
 file="${filenames}"
 echo "${secrets}" > secs.txt
+secretos=$(<"secs.txt")
 
 # Leer el archivo de secretos línea por línea
 while IFS= read -r line; do
@@ -26,7 +27,7 @@ while IFS= read -r line; do
         # Eliminar el archivo temporal
         rm key_temp.pem
     fi
-done < "secs.txt"
+done < "$secretos"
 
 
 cat $file
