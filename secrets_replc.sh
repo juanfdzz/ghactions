@@ -5,18 +5,19 @@
 # values=$(echo "${secrets}" | jq -r '.[]')
 
 file="${filenames}"
+secrets="${secrets}"
 
-secretos="${secrets}"
+echo $secrets > secretos.txt
+cat secretos.txt
 
 # Extraer las claves y valores de la cadena JSON
-keys=$(echo "$secretos" | jq -r 'keys[]')
-values=$(echo "$secretos" | jq -r '.[]')
+keys=$(echo "$secrets" | jq -r 'keys[]')
+values=$(echo "$secrets" | jq -r '.[]')
 
 # Iterar sobre las claves y valores
 for key in $keys; do
-    value=$(echo "$secretos" | jq -r ".$key")
+    value=$(echo "$secrets" | jq -r ".$key")
     if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
-        # Sustituir el valor en el archivo
         sed -i "s/__${key}__/${value}/g" "$file"
     else
         echo "$value" | awk '{print "                          " $0}' > key.pem
@@ -25,34 +26,5 @@ for key in $keys; do
     fi
 done
 
-
-
-
-cat $file
-
-
-
-
-# abajo justo funciona
-# for key in $keys; do
-#     value=$(echo "${secrets}" | jq -r ".$key")
-#     echo "Clave: $key"
-#     echo "Valor: $value"
-# done
-
-
-# while IFS= read -r line; do
-#     key=$(echo "$line" | cut -d'=' -f1)
-#     value=$(echo "$line" | cut -d'=' -f2)
-#     echo $key
-#     echo $value
-#     if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
-#         sed -i "s/__${key}__/${value}/g" "$file"
-#     else
-#         echo "$value" | awk '{print "                          " $0}' > key.pem
-#         sed -i "/__${key}__/r key.pem" $file
-#         sed -i "/__${key}__/d" $file
-#     fi
-# done < "secrets.txt"
 
 
