@@ -9,8 +9,8 @@ file="${filenames}"
 secretos="${secrets}"
 
 # Extraer las claves y valores de la cadena JSON
-keys=$(echo "$secrets" | jq -r 'keys[]')
-values=$(echo "$secrets" | jq -r '.[]')
+keys=$(echo "$secretos" | jq -r 'keys[]')
+values=$(echo "$secretos" | jq -r '.[]')
 
 # Iterar sobre las claves y valores
 for key in $keys; do
