@@ -1,11 +1,18 @@
 #!/bin/bash
 file="${filenames}"
+# keys=$(echo "${secrets}" | jq -r 'keys[]')
+# values=$(echo "${secrets}" | jq -r '.[]')
+
+# Extraer las claves y valores de la cadena JSON
 keys=$(echo "${secrets}" | jq -r 'keys[]')
 values=$(echo "${secrets}" | jq -r '.[]')
 
-echo $keys
-echo valores
-echo $values
+# Imprimir las claves y valores
+for key in $keys; do
+    value=$(echo "$json_string" | jq -r ".$key")
+    echo "Clave: $key"
+    echo "Valor: $value"
+done
 # while IFS= read -r line; do
 #     key=$(echo "$line" | cut -d'=' -f1)
 #     value=$(echo "$line" | cut -d'=' -f2)
