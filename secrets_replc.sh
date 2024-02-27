@@ -15,8 +15,14 @@ values=$(echo "$secretos" | jq -r '.[]')
 # Iterar sobre las claves y valores
 for key in $keys; do
     value=$(echo "$secretos" | jq -r ".$key")
-    # Sustituir el valor en el archivo
-    sed -i "s/__${key}__/${value}/g" "$file"
+    if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
+        # Sustituir el valor en el archivo
+        sed -i "s/__${key}__/${value}/g" "$file"
+    else
+        echo "$value" | awk '{print "                          " $0}' > key.pem
+        sed -i "/__${key}__/r key.pem" $file
+        sed -i "/__${key}__/d" $file
+    fi
 done
 
 
