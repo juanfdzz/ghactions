@@ -13,7 +13,7 @@ values=$(echo "${secrets}" | jq -r '.[]')
 
 # Imprimir las claves y valores
 for key in $keys; do
-    value=$(echo "$json_string" | jq -r ".$key")
+    value=$(echo "${secrets}" | jq -r ".$key")
     echo "Clave: $key"
     echo "Valor: $value"
 done
