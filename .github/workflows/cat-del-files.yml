@@ -13,6 +13,8 @@ jobs:
       - name: Recover + content show
         shell: bash
         run: |
-          git restore --staged lala.yaml
+          # git restore --staged lala.yaml
+          # cat lala.yaml
+          filesha=$(git log -n 1 --pretty=format:%H -- lala.yaml)
+          git checkout "$filesha"^ -- lala.yaml
           cat lala.yaml
-        
