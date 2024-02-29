@@ -10,13 +10,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 2
 
       - name: Recover + content show
         shell: bash
         run: |
-          pwd
+          set -x
+          filesha=$(git log -n 1 --pretty=format:%H -- lala2.yaml | tail -n1)
+          git checkout "$filesha" -- lala2.yaml
           ls
-          filesha=$(git log -n 1 --pretty=format:%H -- lala.yaml | tail -n1)
-          git checkout "$filesha" -- lala.yaml
-          cat lala.yaml
+          cat lala2.yaml
