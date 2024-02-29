@@ -7,8 +7,8 @@
 file="${filenames}"
 secrets="${secrets}"
 
-echo $secrets > secretos.txt
-cat secretos.txt
+echo $secrets > secretos.json
+cat secretos.json
 
 # Extraer las claves y valores de la cadena JSON
 keys=$(echo "$secrets" | jq -r 'keys[]')
