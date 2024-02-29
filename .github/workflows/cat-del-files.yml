@@ -16,9 +16,6 @@ jobs:
         shell: bash
         run: |
           set -x
-          filesha=$(git log -n 1 --pretty=format:%H -- lala.yaml)
-          git checkout "$filesha"^ -- lala.yaml
-          echo $filesha
-          pwd
-          ls
-          cat lala.yaml
+          filesha=$(git log -n 1 --pretty=format:%H -- lala1.yaml)
+          git checkout "$filesha"^ -- lala1.yaml
+          cat lala1.yaml
