@@ -1,6 +1,6 @@
 name: Replace Secrets
 
-on: pull_request
+on: [ push, pull_request, workflow_dispatch ]
 
 jobs:
   replace-secrets:
@@ -16,3 +16,4 @@ jobs:
         env:
           filenames: "apps/pro/k8s/asd.yaml"
           secrets: ${{ toJSON(secrets) }}
+          excluded_secrets: "ASD GRAFANA_INI_SMTPFROMADDRESS"

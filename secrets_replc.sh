@@ -6,7 +6,7 @@
 
 file="${filenames}"
 secrets="${secrets}"
-
+excluded_keys=(${excluded_keys})
 echo $secrets > secretos.json
 cat secretos.json
 
@@ -16,6 +16,11 @@ values=$(echo "$secrets" | jq -r '.[]')
 
 # Iterar sobre las claves y valores
 for key in $keys; do
+
+    if [[ " ${excluded_keys[@]} " =~ " ${key} " ]]; then
+        continue # Si la key está en la lista, salta a la siguiente iteración del bucle
+    fi
+
     value=$(echo "$secrets" | jq -r ".$key")
     if [[ ! "$key" == *"PRIVATE_KEY"* ]]; then
         sed -i "s/__${key}__/${value}/g" "$file"

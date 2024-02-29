@@ -2,7 +2,7 @@ nose = __ASD__
 
   password = ${{ grafana_ini_dbpassword }}
   type = __GRAFANA_INI_SMTPFROMADDRESS__
-  user = ${{ grafana_ini_dbuser }}
+  user = __grafana_ini_dbuser__
   
   clave = |
 __ESTO_ES_UNA_PRIVATE_KEY_PRIVADA__
