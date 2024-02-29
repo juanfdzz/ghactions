@@ -1,0 +1,18 @@
+name: Fetch deleted files
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  replace-secrets:
+    name: Deleted file recovering
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Recover + content show
+        shell: bash
+        run: |
+          git restore --staged lala.yaml
+          cat lala.yaml
+        
