@@ -6,7 +6,7 @@
 
 file="${filenames}"
 secrets="${secrets}"
-excluded_keys=(${excluded_keys})
+excluded_keys=(${excluded_secrets})
 echo $secrets > secretos.json
 cat secretos.json
 
